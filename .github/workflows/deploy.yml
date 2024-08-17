@@ -1,0 +1,43 @@
+name: Deploy EmailAPI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish --configuration Release --output ./out --no-restore
+
+      - name: Check published folder
+        run: ls -l ./out
+
+      - name: Deploy to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private_key
+          chmod 600 private_key
+          rsync -avz --delete --log-file=/tmp/rsync.log -e "ssh -i private_key -o StrictHostKeyChecking=no" ./out/ ubuntu@51.222.205.161:/var/www/emailapi
+          ssh -i private_key -o StrictHostKeyChecking=no ubuntu@51.222.205.161 "sudo systemctl restart emailapi"
+
+      - name: Display rsync log
+        run: cat /tmp/rsync.log

@@ -31,13 +31,13 @@ jobs:
         run: ls -l ./out
 
       - name: Deploy to server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          echo "$SSH_PRIVATE_KEY" > private_key
-          chmod 600 private_key
-          rsync -avz --delete --log-file=/tmp/rsync.log -e "ssh -i private_key -o StrictHostKeyChecking=no" ./out/ ubuntu@51.222.205.161:/var/www/emailapi
-          ssh -i private_key -o StrictHostKeyChecking=no ubuntu@51.222.205.161 "sudo systemctl restart emailapi"
+          env:
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          run: |
+            echo "$SSH_PRIVATE_KEY" > private_key
+            chmod 600 private_key
+            rsync -avz --delete --rsync-path="sudo rsync" --log-file=/tmp/rsync.log -e "ssh -i private_key -o StrictHostKeyChecking=no" ./out/ ubuntu@51.222.205.161:/var/www/emailapi
+            ssh -i private_key -o StrictHostKeyChecking=no ubuntu@51.222.205.161 "sudo systemctl restart emailapi"
 
       - name: Display rsync log
         run: cat /tmp/rsync.log

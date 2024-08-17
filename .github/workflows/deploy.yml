@@ -3,7 +3,7 @@ name: Deploy EmailAPI
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:

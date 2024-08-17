@@ -1,4 +1,4 @@
-
+﻿
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -12,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 //        listenOptions.ServerCertificate = new X509Certificate2("localhost.crt", "localhost.key");
 //    });
 //});
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5001); // Слушаем на порту 5001 вместо 5000
+});
 
 // Add services to the container.
 

@@ -4,8 +4,9 @@ using MimeKit;
 using MailKit.Net.Smtp;
 namespace PrintMyWallApi.Controllers
 {
-    [Route("api/controller")]
     [ApiController]
+    [Route("api/controller")]
+   
     public class EmailController : Controller
     {
          
@@ -54,7 +55,7 @@ namespace PrintMyWallApi.Controllers
             return Ok(new { status = "Emails sent successfully" });
         }
 
-        [HttpGet("test")]
+        [HttpGet(Name = "TestApi")]
         public IActionResult TestApi()
         {
             return Ok("API is working");

@@ -13,10 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 //    });
 //});
 
-//builder.WebHost.ConfigureKestrel(options =>
-//{
-//    options.ListenAnyIP(5001); // Слушаем на порту 5001 вместо 5000
-//});
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5001); // Слушаем на порту 5001 вместо 5000
+});
 
 // Add services to the container.
 

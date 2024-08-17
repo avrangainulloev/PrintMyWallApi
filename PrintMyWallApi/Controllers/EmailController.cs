@@ -5,7 +5,7 @@ using MailKit.Net.Smtp;
 namespace PrintMyWallApi.Controllers
 {
     [ApiController]
-    [Route("api/controller")]
+    [Route("api/[controller]")]
    
     public class EmailController : Controller
     {

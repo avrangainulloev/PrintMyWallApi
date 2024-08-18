@@ -35,8 +35,20 @@ builder.Services.AddSwaggerGen();
 //        ValidAudience = "printmywall.ca",
 //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSecureKeyHere"))
 //    };
+
 //});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:8080")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 var app = builder.Build();
+
+// Используйте CORS
+app.UseCors("AllowSpecificOrigin");
+
 
 //app.Use(async (context, next) =>
 //{

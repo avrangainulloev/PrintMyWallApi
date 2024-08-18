@@ -39,21 +39,14 @@ builder.Services.AddSwaggerGen();
 //});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins",
-        builder => builder.WithOrigins(
-            "http://localhost:8080"
-        )
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .AllowCredentials()); // Если используются куки или авторизация
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:8080")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
 });
-
 var app = builder.Build();
-
 // Используйте CORS
 app.UseCors("AllowSpecificOrigin");
-
-
 //app.Use(async (context, next) =>
 //{
 //    var apiKey = context.Request.Headers["X-API-KEY"].FirstOrDefault();

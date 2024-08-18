@@ -39,11 +39,15 @@ builder.Services.AddSwaggerGen();
 //});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:8080")
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+    options.AddPolicy("AllowSpecificOrigins",
+        builder => builder.WithOrigins(
+            "http://localhost:8080",          // Локальный адрес для разработки
+            "https://printmywall.ca"         // Доменное имя после деплоя
+        )
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 });
+
 var app = builder.Build();
 
 // Используйте CORS

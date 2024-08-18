@@ -40,7 +40,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:8080")
+        builder => builder.WithOrigins("http://localhost:8080", "https://printmywall.ca")
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });

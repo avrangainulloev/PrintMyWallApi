@@ -18,6 +18,12 @@ namespace PrintMyWallApi.Controllers
                 htmlContent: GenerateHtmlForAdmin(request.Name, request.Email, request.Phone, request.Details)
             );
 
+            SendHtmlEmail(
+               toEmail: "info@printmywall.ca",
+               subject: "New Quote Request",
+               htmlContent: GenerateHtmlForAdmin(request.Name, request.Email, request.Phone, request.Details)
+           );
+
             // Отправляем письмо отправителю
             SendHtmlEmail(
                 toEmail: request.Email,
@@ -37,7 +43,7 @@ namespace PrintMyWallApi.Controllers
         private void SendHtmlEmail(string toEmail, string subject, string htmlContent)
         {
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("PrintMyWall", "avrang.ainulloev@gmail.com"));
+            message.From.Add(new MailboxAddress("PrintMyWall", "printmywallca@gmail.com"));
             message.To.Add(new MailboxAddress("", toEmail));
             message.Subject = subject;
 
@@ -51,7 +57,8 @@ namespace PrintMyWallApi.Controllers
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("avrang.ainulloev@gmail.com", "iqeb fxzv bzoc icmb");
+                //client.Authenticate("avrang.ainulloev@gmail.com", "iqeb fxzv bzoc icmb");
+                client.Authenticate("printmywallca@gmail.com", "lpja kdpk jyyf dolb");
                 client.Send(message);
                 client.Disconnect(true);
             }

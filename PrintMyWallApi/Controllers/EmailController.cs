@@ -14,14 +14,14 @@ namespace PrintMyWallApi.Controllers
             // Отправляем письмо вам (администратору)
             SendHtmlEmail(
                 toEmail: "avrang.ainulloev@gmail.com",
-                subject: "Новый запрос на предложение",
+                subject: "New Quote Request",
                 htmlContent: GenerateHtmlForAdmin(request.Name, request.Email, request.Phone, request.Details)
             );
 
             // Отправляем письмо отправителю
             SendHtmlEmail(
                 toEmail: request.Email,
-                subject: "Спасибо за ваш запрос",
+                subject: "Thank You for Your Request",
                 htmlContent: GenerateHtmlForUser(request.Name)
             );
 
@@ -63,13 +63,13 @@ namespace PrintMyWallApi.Controllers
         <html>
         <body style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;'>
             <div style='max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);'>
-                <h2 style='color: #333333;'>Новый запрос от {name}</h2>
-                <p style='color: #555555;'>Вот информация, которую отправил клиент:</p>
+                <h2 style='color: #333333;'>New Quote Request from {name}</h2>
+                <p style='color: #555555;'>Here is the information the client provided:</p>
                 <div style='text-align: left; margin: 20px 0;'>
-                    <p><strong>Имя:</strong> {name}</p>
+                    <p><strong>Name:</strong> {name}</p>
                     <p><strong>Email:</strong> {email}</p>
-                    <p><strong>Телефон:</strong> {phone}</p>
-                    <p><strong>Детали проекта:</strong></p>
+                    <p><strong>Phone:</strong> {phone}</p>
+                    <p><strong>Project Details:</strong></p>
                     <p style='background-color: #f0f0f0; padding: 10px; border-radius: 5px;'>{details}</p>
                 </div>
             </div>
@@ -83,9 +83,9 @@ namespace PrintMyWallApi.Controllers
         <html>
         <body style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;'>
             <div style='max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);'>
-                <h2 style='color: #333333;'>Спасибо, {name}!</h2>
-                <p style='color: #555555;'>Спасибо, что связались с нами. Мы свяжемся с вами в ближайшее время.</p>
-                <p style='color: #777777;'>С уважением,<br>Ваша команда</p>
+                <h2 style='color: #333333;'>Thank You, {name}!</h2>
+                <p style='color: #555555;'>Thank you for reaching out to us. We will get back to you shortly.</p>
+                <p style='color: #777777;'>Best regards,<br>Your Team</p>
             </div>
         </body>
         </html>";
@@ -95,7 +95,7 @@ namespace PrintMyWallApi.Controllers
         {
             public string Name { get; set; }
             public string Email { get; set; }
-            public string Phone { get; set; } // Добавлено поле для номера телефона
+            public string Phone { get; set; } // Поле для номера телефона
             public string Details { get; set; }
         }
     }

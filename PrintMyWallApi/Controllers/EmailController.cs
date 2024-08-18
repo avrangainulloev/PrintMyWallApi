@@ -1,48 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MimeKit;
-//using System.Net.Mail;
 using MailKit.Net.Smtp;
+
 namespace PrintMyWallApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-   
     public class EmailController : Controller
     {
-         
-
-        //[HttpPost("send")]
-        //public IActionResult SendEmail([FromBody] EmailRequest request)
-        //{
-        //    var message = new MimeMessage();
-        //    message.From.Add(new MailboxAddress("Avrang", "avrang.ainulloev@gmail.com"));
-        //    message.To.Add(new MailboxAddress("", "avrang.ainulloev@gmail.com"));
-        //    message.Subject = "Quote Request";
-
-        //    message.Body = new TextPart("plain")
-        //    {
-        //        Text = $"Name: {request.Name}\nEmail: {request.Email}\nDetails: {request.Details}"
-        //    };
-
-        //    using (var client = new SmtpClient())
-        //    {
-        //        client.Connect("smtp.gmail.com", 587, false);
-        //        client.Authenticate("avrang.ainulloev@gmail.com", "iqeb fxzv bzoc icmb");
-        //        client.Send(message);
-        //        client.Disconnect(true);
-        //    }
-
-        //    return Ok(new { status = "Email sent successfully" });
-        //}
-
         [HttpPost("send")]
         public IActionResult SendEmail([FromBody] EmailRequest request)
         {
-            // Отправляем письмо вам
+            // Отправляем письмо вам (администратору)
             SendHtmlEmail(
                 toEmail: "avrang.ainulloev@gmail.com",
                 subject: "Новый запрос на предложение",
-                htmlContent: GenerateHtmlForAdmin(request.Name, request.Email, request.Details)
+                htmlContent: GenerateHtmlForAdmin(request.Name, request.Email, request.Phone, request.Details)
             );
 
             // Отправляем письмо отправителю
@@ -84,7 +57,7 @@ namespace PrintMyWallApi.Controllers
             }
         }
 
-        private string GenerateHtmlForAdmin(string name, string email, string details)
+        private string GenerateHtmlForAdmin(string name, string email, string phone, string details)
         {
             return $@"
         <html>
@@ -95,6 +68,7 @@ namespace PrintMyWallApi.Controllers
                 <div style='text-align: left; margin: 20px 0;'>
                     <p><strong>Имя:</strong> {name}</p>
                     <p><strong>Email:</strong> {email}</p>
+                    <p><strong>Телефон:</strong> {phone}</p>
                     <p><strong>Детали проекта:</strong></p>
                     <p style='background-color: #f0f0f0; padding: 10px; border-radius: 5px;'>{details}</p>
                 </div>
@@ -116,12 +90,13 @@ namespace PrintMyWallApi.Controllers
         </body>
         </html>";
         }
+
         public class EmailRequest
         {
             public string Name { get; set; }
             public string Email { get; set; }
+            public string Phone { get; set; } // Добавлено поле для номера телефона
             public string Details { get; set; }
-         
         }
     }
 }

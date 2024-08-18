@@ -45,7 +45,8 @@ builder.Services.AddCors(options =>
             "https://printmywall.ca"         // Доменное имя после деплоя
         )
         .AllowAnyMethod()
-        .AllowAnyHeader());
+        .AllowAnyHeader()
+        .AllowCredentials()); // Если используются куки или авторизация
 });
 
 var app = builder.Build();

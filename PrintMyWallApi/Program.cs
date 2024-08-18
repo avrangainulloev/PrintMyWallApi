@@ -41,8 +41,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
         builder => builder.WithOrigins(
-            "http://localhost:8080",          // Локальный адрес для разработки
-            "https://printmywall.ca"         // Доменное имя после деплоя
+            "http://localhost:8080"
         )
         .AllowAnyMethod()
         .AllowAnyHeader()
